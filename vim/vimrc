@@ -1,0 +1,100 @@
+set runtimepath+=~/.vim_runtime
+set encoding=UTF-8
+
+" # Blacklist pathogen plugins
+let g:pathogen_disabled = []
+call add(g:pathogen_disabled, 'ctrlp.vim')
+
+" #### Source amix/vimrc ######################################################
+source ~/.vim_runtime/vimrcs/basic.vim
+source ~/.vim_runtime/vimrcs/filetypes.vim
+source ~/.vim_runtime/vimrcs/plugins_config.vim
+source ~/.vim_runtime/vimrcs/extended.vim
+
+" #### Common #################################################################
+set termguicolors
+if filereadable(expand("~/.vimrc_background"))
+  " let base16colorspace=256
+  source ~/.vimrc_background
+endif
+" # remap escpe to jj
+:imap jj <Esc>
+
+" # line numbers 
+:set number relativenumber
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+:augroup END
+
+" # horizontal split below instead of above
+set splitbelow
+
+" #### Tabs ####################################################################
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+
+" ### lightline config
+" lightline devicons
+let g:lightline = {
+      \ 'component_function': {
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
+      \ }
+      \ }
+" lightline file path
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
+      \ }
+      \ }
+" lightline devicons functions
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+" devicons glyph config
+" enable folder/directory glyph flag (disabled by default with 0)
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" enable open and close folder/directory glyph flags (disabled by default with 0)
+let g:DevIconsEnableFoldersOpenClose = 1
+
+" #### OS specific #############################################################
+let uname = substitute(system('uname'), '\n', '', '')
+if uname == 'Darwin'
+    " devicons
+    let g:WebDevIconsOS = 'Darwin'
+    " change cursor based on mode
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+elseif uname == 'Linux'
+	" use the clipboard
+	:set clipboard=unnamed  " use the clipboards of vim and win
+	:set go=a               " Visual selection auto copied to the clipboard
+    " change cursor based on mode
+    let &t_SI = "\<Esc>[6 q"
+    let &t_SR = "\<Esc>[4 q"
+    let &t_EI = "\<Esc>[2 q"
+    " deoplete python host
+    let g:python_host_prog = '/usr/bin/python2'
+    let g:python3_host_prog = '/usr/bin/python3'
+endif	
+
+""""""""""""""""""""""""""""""
+" => fzf
+""""""""""""""""""""""""""""""
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+map <leader>j :Files<cr>
+
+" enable deoplete a startup
+let g:deoplete#enable_at_startup = 1

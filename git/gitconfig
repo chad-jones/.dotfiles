@@ -1,0 +1,5 @@
+[user]
+	name = Chad Jones
+	email = chad@crashcode.org
+[core]
+	editor = vim

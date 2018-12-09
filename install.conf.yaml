@@ -1,0 +1,41 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.config/base16-shell:
+        path: zsh/base16-shell
+        create: true
+    ~/.gitconfig: git/gitconfig
+    ~/.vimrc: vim/vimrc
+    ~/.zshrc: zsh/zshrc
+    ~/.zshenv: zsh/zshenv
+    ~/.zsh_plugins.txt: zsh/zsh_plugins.txt
+    ~/.Xresources:
+      path: X/Xresources
+      if: '[[ "$(uname)" == "Linux" ]]'
+    ~/.xinitrc: 
+      path: X/xinitrc
+      if: '[[ "$(uname)" == "Linux" ]]'
+    ~/.i3:
+      path: i3/
+      create: true
+      if: '[[ "$(uname)" == "Linux" ]]'
+    ~/termite.terminfo:
+      path: termite/termite.terminfo
+      if: '[[ "$(uname)" == "Linux" ]]'
+    ~/.vim_runtime:
+      path: vim/vim_runtime
+      create: true
+    ~/.vim:
+      path: vim/.vim/
+      create: true
+    vim/vim_runtime/my_plugins:
+      path: vim/plugins/*
+      create: true
+      glob: true
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]        

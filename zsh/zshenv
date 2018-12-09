@@ -1,0 +1,15 @@
+# ~/.zshenv
+VIMDIR=$(ls /usr/share/vim|egrep '^vim([0-9])+$')
+
+export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+# export PAGER="/usr/share/vim/$VIMDIR/macros/less.sh"
+# export MANPAGER="sh -c \"col -b | /usr/share/vim/$VIMDIR/macros/less.sh -c 'set ft=man nonu nomod nolist' -\""
+export FZF_DEFAULT_COMMAND='find .'
+export EDITOR=$(which vim)
+export VISUAL=$(which vim)
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
