@@ -188,7 +188,9 @@ case `uname` in
     ## Colorize the ls output ##
     alias ls='ls -G'
     alias fuckdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
-    source ${HOME}/.fzf.zsh
+    # fzf
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
     # Go development
     export GOPATH="${HOME}/.go"
     export GOROOT="$(brew --prefix golang)/libexec"
