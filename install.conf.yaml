@@ -11,6 +11,7 @@
   - vim --with-python --with-ruby --with-perl
   - nvim
   - zsh
+  - ag
   - getantibody/tap/antibody
   - terminal-notifier
   - fzf
