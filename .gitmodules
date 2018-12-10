@@ -47,3 +47,7 @@
 	path = dotbot-brew
 	url = https://github.com/d12frosted/dotbot-brew.git
     ignore = dirty
+[submodule "vim/plugins/fzf"]
+	path = vim/plugins/fzf
+	url = https://github.com/junegunn/fzf.git
+    ignore = dirty

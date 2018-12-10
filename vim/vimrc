@@ -30,6 +30,7 @@ endif
 
 " # horizontal split below instead of above
 set splitbelow
+set splitright
 
 " #### Tabs ####################################################################
 set expandtab
@@ -76,6 +77,8 @@ if uname == 'Darwin'
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_SR = "\<Esc>]50;CursorShape=2\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    " fzf If installed using Homebrew
+    set rtp+=/usr/local/opt/fzf
 
 elseif uname == 'Linux'
 	" use the clipboard
@@ -97,6 +100,9 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 map <leader>j :Files<cr>
+
+" NerdTree close on open file
+let g:NERDTreeQuitOnOpen = 1
 
 " enable deoplete a startup
 let g:deoplete#enable_at_startup = 1
