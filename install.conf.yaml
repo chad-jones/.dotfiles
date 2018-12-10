@@ -4,6 +4,25 @@
 
 - clean: ['~']
 
+- tap:
+  - caskroom/fonts
+
+- brew:
+  - vim --with-python --with-ruby --with-perl
+  - nvim
+  - zsh
+  - getantibody/tap/antibody
+  - terminal-notifier
+  - fzf
+  - thefuck
+  - pre-commit
+  - git-crypt
+  - kubernetes-cli
+  - kubectx
+
+- cask:
+  - font-hack-nerd-font
+
 - link:
     ~/.config/base16-shell:
         path: zsh/base16-shell

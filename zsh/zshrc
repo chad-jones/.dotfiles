@@ -17,46 +17,48 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 # Customise the Powerlevel9k prompts
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     vi_mode
+	kubecontext
 	dir
 )
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    background_jobs
     root_indicator
     status
-    background_jobs
     vcs
-	kubecontext
-	os_icon_joined
+	os_icon
 )
-# Powerlevel9k Colors
-POWERLEVEL9K_KUBECONTEXT_FOREGROUND='grey27'
-POWERLEVEL9K_KUBECONTEXT_BACKGROUND='grey50'
+## Powerlevel9k Colors
+# Kubectx
+POWERLEVEL9K_KUBECONTEXT_BACKGROUND='grey35'
+POWERLEVEL9K_KUBECONTEXT_FOREGROUND='grey82'
 
-POWERLEVEL9K_OS_ICON_FOREGROUND='grey27'
-POWERLEVEL9K_OS_ICON_BACKGROUND='grey50'
+# OS icon
+POWERLEVEL9K_OS_ICON_BACKGROUND='grey82'
+POWERLEVEL9K_OS_ICON_FOREGROUND='grey39'
 
 # Advandced `dir` color customization 
-POWERLEVEL9K_DIR_HOME_BACKGROUND='grey35'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='grey82'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='grey35'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='grey82'
-POWERLEVEL9K_DIR_HOME_DEFAULT_BACKGROUND='grey35'
-POWERLEVEL9K_DIR_HOME_DEFAULT_FOREGROUND='grey82'
-POWERLEVEL9K_DIR_HOME_ETC_BACKGROUND='grey35'
-POWERLEVEL9K_DIR_HOME_ETC_FOREGROUND='grey82'
+POWERLEVEL9K_DIR_HOME_BACKGROUND='grey19'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='grey58'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='grey19'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='grey58'
+POWERLEVEL9K_DIR_HOME_DEFAULT_BACKGROUND='grey19'
+POWERLEVEL9K_DIR_HOME_DEFAULT_FOREGROUND='grey58'
+POWERLEVEL9K_DIR_HOME_ETC_BACKGROUND='grey19'
+POWERLEVEL9K_DIR_HOME_ETC_FOREGROUND='grey58'
 
 # Advanced `vcs` color customization
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='blue'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
 
 # Advanced `vi_mode` color customization
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='grey27'
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='skyblue1'
-POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='grey27'
+POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='grey27'
 POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='green'
+POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='grey27'
 
 # Advanced `status` color customization
 POWERLEVEL9K_STATUS_OK_BACKGROUND='grey35'
@@ -65,8 +67,12 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND='grey35'
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND='red'
 
 # Time colors
-POWERLEVEL9K_TIME_FOREGROUND='grey27'
 POWERLEVEL9K_TIME_BACKGROUND='grey50'
+POWERLEVEL9K_TIME_FOREGROUND='grey27'
+
+# Background jobs colors
+POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='grey19'
+POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='grey58'
 
 # Segment separators
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
@@ -147,10 +153,18 @@ export KEYTIMEOUT=14
 bindkey -M viins 'jj' vi-cmd-mode
 
 # Better search history
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
+# start typing + [Up-Arrow] - fuzzy find history forward
+if [[ "${terminfo[kcuu1]}" != "" ]]; then
+  autoload -U up-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+fi
+# start typing + [Down-Arrow] - fuzzy find history backward
+if [[ "${terminfo[kcud1]}" != "" ]]; then
+  autoload -U down-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+fi
 
 # Keybindings
 bindkey '^[[A' history-substring-search-up
@@ -173,6 +187,14 @@ case `uname` in
     # OS X
     ## Colorize the ls output ##
     alias ls='ls -G'
+    alias fuckdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
+    source ${HOME}/.fzf.zsh
+    # Go development
+    export GOPATH="${HOME}/.go"
+    export GOROOT="$(brew --prefix golang)/libexec"
+    export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+    # Add Visual Studio Code (code)
+    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   ;;
   Linux)
     # Linux
@@ -197,4 +219,13 @@ alias mkdir="mkdir -pv"
 alias histg="history | grep"
 alias top="htop"
 alias myip="curl http://ipecho.net/plain; echo"
+alias fuckgpg='gpg-connect-agent killagent /bye; gpg-connect-agent /bye'
 
+# GPG
+export "GPG_TTY=$(tty)"
+export "SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh"
+
+
+if [ -r ${HOME}/.zshrc_local ]; then
+    source ${HOME}/.zshrc_local
+fi

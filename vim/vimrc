@@ -68,6 +68,8 @@ let g:DevIconsEnableFoldersOpenClose = 1
 " #### OS specific #############################################################
 let uname = substitute(system('uname'), '\n', '', '')
 if uname == 'Darwin'
+	" use the clipboard
+	:set clipboard=unnamed  " use the clipboards of vim and win
     " devicons
     let g:WebDevIconsOS = 'Darwin'
     " change cursor based on mode
@@ -98,3 +100,7 @@ map <leader>j :Files<cr>
 
 " enable deoplete a startup
 let g:deoplete#enable_at_startup = 1
+
+" mouse support
+:set mouse=n
+:set ttymouse=xterm2
