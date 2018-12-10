@@ -102,5 +102,5 @@ map <leader>j :Files<cr>
 let g:deoplete#enable_at_startup = 1
 
 " mouse support
-:set mouse=n
+:set mouse=a
 :set ttymouse=xterm2
