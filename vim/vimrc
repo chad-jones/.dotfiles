@@ -51,14 +51,18 @@ set softtabstop=2
 let g:lightline = {
 \ 'colorscheme': 'wombat',
 \ 'active': {
-\   'left': [['mode', 'paste'], ['filename', 'modified']],
-\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\   'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
+\   'right': [['lineinfo'], ['percent'], ['linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok', 'fileformat', 'filetype']]
 \ },
 \ 'component_expand': {
 \   'linter_checking': 'lightline#ale#checking',
 \   'linter_warnings': 'LightlineLinterWarnings',
 \   'linter_errors': 'LightlineLinterErrors',
 \   'linter_ok': 'LightlineLinterOK'
+\ },
+\ 'component_function': {
+\   'filetype': 'MyFiletype',
+\   'fileformat': 'MyFileformat',
 \ },
 \ 'component_type': {
 \   'linter_checking': 'left',
@@ -92,27 +96,14 @@ function! LightlineLinterOK() abort
   return l:counts.total == 0 ? "\uf00c " : ''
 endfunction
 
-" lightline devicons
-" let g:lightline = {
-"       \ 'component_function': {
-"       \   'filetype': 'MyFiletype',
-"       \   'fileformat': 'MyFileformat',
-"       \ }
-"       \ }
-" " lightline file path
-" let g:lightline = {
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
-"       \ }
-"       \ }
 " " lightline devicons functions
-" function! MyFiletype()
-"   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-" endfunction
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
 
-" function! MyFileformat()
-"   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-" endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
 """"""""""""""""""""""""""""""
 " => devicons
