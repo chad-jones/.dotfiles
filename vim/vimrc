@@ -161,7 +161,8 @@ nmap <Leader>l :BLines<CR>
 nmap <Leader>L :Lines<CR>
 nmap <Leader>' :Marks<CR>
 " Project Finder
-nmap <Leader>a :Ag<Space>
+nmap <Leader>ag :Ag<Space>
+nmap <Leader>rg :Rg<CR>
 " Help finder
 nmap <Leader>H :Helptags!<CR>
 
@@ -210,7 +211,7 @@ highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 nmap ]w :ALENextWrap<CR>
 nmap [w :ALEPreviousWrap<CR>
-nmap <Leader>F <Plug>(ale_fix)
+nmap <Leader>af <Plug>(ale_fix)
 augroup VimDiff
   autocmd!
   autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
