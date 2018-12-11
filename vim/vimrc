@@ -1,26 +1,32 @@
 set runtimepath+=~/.vim_runtime
 set encoding=UTF-8
 
-" # Blacklist pathogen plugins
+""""""""""""""""""""""""""""""
+" =>  blacklist pathogen plugins
+""""""""""""""""""""""""""""""
 let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'ctrlp.vim')
 
-" #### Source amix/vimrc ######################################################
+""""""""""""""""""""""""""""""
+" =>  source amix/vimrc
+""""""""""""""""""""""""""""""
 source ~/.vim_runtime/vimrcs/basic.vim
 source ~/.vim_runtime/vimrcs/filetypes.vim
 source ~/.vim_runtime/vimrcs/plugins_config.vim
 source ~/.vim_runtime/vimrcs/extended.vim
 
-" #### Common #################################################################
+""""""""""""""""""""""""""""""
+" => base16
+""""""""""""""""""""""""""""""
 set termguicolors
-if filereadable(expand("~/.vimrc_background"))
+if filereadable(expand('~/.vimrc_background'))
   " let base16colorspace=256
   source ~/.vimrc_background
 endif
-" # remap escpe to jj
-:imap jj <Esc>
 
-" # line numbers 
+""""""""""""""""""""""""""""""
+" =>  line numbers
+""""""""""""""""""""""""""""""
 :set number relativenumber
 :augroup numbertoggle
 :  autocmd!
@@ -32,41 +38,93 @@ endif
 set splitbelow
 set splitright
 
-" #### Tabs ####################################################################
+""""""""""""""""""""""""""""""
+" =>  tabs
+""""""""""""""""""""""""""""""
 set expandtab
 set shiftwidth=2
 set softtabstop=2
 
-" ### lightline config
+""""""""""""""""""""""""""""""
+" => lightline
+""""""""""""""""""""""""""""""
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [['mode', 'paste'], ['filename', 'modified']],
+\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\ },
+\ 'component_expand': {
+\   'linter_checking': 'lightline#ale#checking',
+\   'linter_warnings': 'LightlineLinterWarnings',
+\   'linter_errors': 'LightlineLinterErrors',
+\   'linter_ok': 'LightlineLinterOK'
+\ },
+\ 'component_type': {
+\   'linter_checking': 'left',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error',
+\   'linter_ok': 'left',
+\ },
+\ }
+function! LightlineLinterChecking() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf("%d \uf110", all_non_errors)
+endfunction
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf("%d \uf071", all_non_errors)
+endfunction
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf("%d \uf05e", all_errors)
+endfunction
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? "\uf00c " : ''
+endfunction
+
 " lightline devicons
-let g:lightline = {
-      \ 'component_function': {
-      \   'filetype': 'MyFiletype',
-      \   'fileformat': 'MyFileformat',
-      \ }
-      \ }
-" lightline file path
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
-      \ }
-      \ }
-" lightline devicons functions
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
+" let g:lightline = {
+"       \ 'component_function': {
+"       \   'filetype': 'MyFiletype',
+"       \   'fileformat': 'MyFileformat',
+"       \ }
+"       \ }
+" " lightline file path
+" let g:lightline = {
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
+"       \ }
+"       \ }
+" " lightline devicons functions
+" function! MyFiletype()
+"   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+" endfunction
 
-function! MyFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
+" function! MyFileformat()
+"   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+" endfunction
 
-" devicons glyph config
+""""""""""""""""""""""""""""""
+" => devicons
+""""""""""""""""""""""""""""""
 " enable folder/directory glyph flag (disabled by default with 0)
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 " enable open and close folder/directory glyph flags (disabled by default with 0)
 let g:DevIconsEnableFoldersOpenClose = 1
 
-" #### OS specific #############################################################
+""""""""""""""""""""""""""""""
+" => OS specific
+""""""""""""""""""""""""""""""
 let uname = substitute(system('uname'), '\n', '', '')
 if uname == 'Darwin'
 	" use the clipboard
@@ -91,7 +149,7 @@ elseif uname == 'Linux'
     " deoplete python host
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
-endif	
+endif
 
 """"""""""""""""""""""""""""""
 " => fzf
@@ -102,44 +160,87 @@ omap <leader><tab> <plug>(fzf-maps-o)
 " File finder
 nmap <Leader>f :GFiles<CR>
 nmap <Leader>F :Files<CR>
-
 " Buffer finder
 nmap <Leader>h :History<CR>
-
 " Tag finder
 nmap <Leader>t :BTags<CR>
 nmap <Leader>T :Tags<CR>
-
 " Line finder
 nmap <Leader>l :BLines<CR>
 nmap <Leader>L :Lines<CR>
 nmap <Leader>' :Marks<CR>
-
 " Project Finder
 nmap <Leader>a :Ag<Space>
-
 " Help finder
 nmap <Leader>H :Helptags!<CR>
 
-" NerdTree close on open file
+""""""""""""""""""""""""""""""
+" => NERDTree
+""""""""""""""""""""""""""""""
+" toggle on open file
 let g:NERDTreeQuitOnOpen = 1
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-nnoremap <Leader>n :NERDTreeToggle<Enter>
 autocmd StdinReadPre * let s:std_in=1
+" exit if NERDTree is the last buffer
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" minimal UI
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 
+""""""""""""""""""""""""""""""
+" => deoplete
+""""""""""""""""""""""""""""""
 " enable deoplete a startup
 let g:deoplete#enable_at_startup = 1
+" auto close completion popup after successful completion
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" tab completion
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
 
-" mouse support
+""""""""""""""""""""""""""""""
+" =>  GitGutter
+""""""""""""""""""""""""""""""
+let g:gitgutter_grep_command = 'rg --hidden --follow --glob "!.git/*"'
+let g:gitgutter_enabled = 1
+
+""""""""""""""""""""""""""""""
+" =>  ALE
+""""""""""""""""""""""""""""""
+let g:ale_sign_warning = "\uf071"
+let g:ale_sign_error = "\uf05e"
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
+nmap ]w :ALENextWrap<CR>
+nmap [w :ALEPreviousWrap<CR>
+nmap <Leader>F <Plug>(ale_fix)
+augroup VimDiff
+  autocmd!
+  autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
+augroup END
+""""""""""""""""""""""""""""""
+" =>  mouse support
+""""""""""""""""""""""""""""""
 :set mouse=a
 :set ttymouse=xterm2
 
-" better split navigation
+
+""""""""""""""""""""""""""""""
+" =>  better split navigation
+""""""""""""""""""""""""""""""
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+""""""""""""""""""""""""""""""
+" => key bindings
+""""""""""""""""""""""""""""""
+" remap esc to `jj`
+:imap jj <Esc>

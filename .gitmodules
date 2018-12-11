@@ -51,3 +51,15 @@
 	path = vim/plugins/fzf
 	url = https://github.com/junegunn/fzf.git
     ignore = dirty
+[submodule "vim/plugins/vim-rhubarb"]
+	path = vim/plugins/vim-rhubarb
+	url = https://github.com/tpope/vim-rhubarb.git
+    ignore = dirty
+[submodule "vim/plugins/vim-gitgutter"]
+	path = vim/plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+    ignore = dirty
+[submodule "vim/plugins/lightline-ale"]
+	path = vim/plugins/lightline-ale
+	url = https://github.com/maximbaz/lightline-ale.git
+    ignore = dirty

@@ -12,10 +12,12 @@
   - nvim
   - zsh
   - ag
+  - ripgrep
   - getantibody/tap/antibody
   - terminal-notifier
   - fzf
   - thefuck
+  - hub
   - pre-commit
   - git-crypt
   - kubernetes-cli
