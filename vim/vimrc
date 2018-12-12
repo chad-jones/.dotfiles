@@ -216,6 +216,13 @@ augroup VimDiff
   autocmd!
   autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
 augroup END
+
+""""""""""""""""""""""""""""""
+" =>  sneak
+""""""""""""""""""""""""""""""
+let g:sneak#label = 1
+
+
 """"""""""""""""""""""""""""""
 " =>  mouse support
 """"""""""""""""""""""""""""""

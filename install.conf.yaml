@@ -21,6 +21,7 @@
   - git-crypt
   - kubernetes-cli
   - kubectx
+  - ansible-lint
   - vim --with-python --with-ruby --with-perl
 
 - cask:
