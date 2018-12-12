@@ -8,7 +8,6 @@
   - caskroom/fonts
 
 - brew:
-  - vim --with-python --with-ruby --with-perl
   - nvim
   - zsh
   - ag
@@ -22,6 +21,7 @@
   - git-crypt
   - kubernetes-cli
   - kubectx
+  - vim --with-python --with-ruby --with-perl
 
 - cask:
   - font-hack-nerd-font
