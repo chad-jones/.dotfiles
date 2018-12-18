@@ -63,7 +63,3 @@
 	path = vim/plugins/lightline-ale
 	url = https://github.com/maximbaz/lightline-ale.git
     ignore = dirty
-[submodule "vim/plugins/vim-sneak"]
-	path = vim/plugins/vim-sneak
-	url = https://github.com/justinmk/vim-sneak.git
-    ignore = dirty

@@ -8,7 +8,7 @@
   - caskroom/fonts
 
 - brew:
-  - nvim
+  - neovim
   - zsh
   - ag
   - ripgrep
@@ -33,6 +33,7 @@
         create: true
     ~/.gitconfig: git/gitconfig
     ~/.vimrc: vim/vimrc
+    ~/.config/nvim/init.vim: vim/vimrc
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.zsh_plugins.txt: zsh/zsh_plugins.txt
@@ -49,16 +50,9 @@
     ~/termite.terminfo:
       path: termite/termite.terminfo
       if: '[[ "$(uname)" == "Linux" ]]'
-    ~/.vim_runtime:
-      path: vim/vim_runtime
+    ~/.vimrcs:
+      path: vim/vimrcs
       create: true
-    ~/.vim:
-      path: vim/.vim/
-      create: true
-    vim/vim_runtime/my_plugins:
-      path: vim/plugins/*
-      create: true
-      glob: true
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]        

@@ -197,6 +197,7 @@ case `uname` in
     # Go development
     export GOPATH="${HOME}/.go"
     export GOROOT="$(brew --prefix golang)/libexec"
+    export "SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh"
     export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
     # Add Visual Studio Code (code)
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -229,7 +230,6 @@ eval "$(hub alias -s)"
 
 # GPG
 export "GPG_TTY=$(tty)"
-export "SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh"
 
 
 if [ -r ${HOME}/.zshrc_local ]; then

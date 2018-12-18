@@ -1,117 +1,65 @@
-set runtimepath+=~/.vim_runtime
+" set runtimepath+=~/.vim_runtime
 set encoding=UTF-8
 
 """"""""""""""""""""""""""""""
-" =>  blacklist pathogen plugins
+" =>  vim-plug
 """"""""""""""""""""""""""""""
-let g:pathogen_disabled = []
-call add(g:pathogen_disabled, 'ctrlp.vim')
-
-""""""""""""""""""""""""""""""
-" =>  source amix/vimrc
-""""""""""""""""""""""""""""""
-source ~/.vim_runtime/vimrcs/basic.vim
-source ~/.vim_runtime/vimrcs/filetypes.vim
-source ~/.vim_runtime/vimrcs/plugins_config.vim
-source ~/.vim_runtime/vimrcs/extended.vim
-
-""""""""""""""""""""""""""""""
-" => base16
-""""""""""""""""""""""""""""""
-set termguicolors
-if filereadable(expand('~/.vimrc_background'))
-  " let base16colorspace=256
-  source ~/.vimrc_background
+" neovim
+if has('nvim')
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+else
+" vim
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 endif
 
-""""""""""""""""""""""""""""""
-" =>  line numbers
-""""""""""""""""""""""""""""""
-:set number relativenumber
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+call plug#begin('~/.vim/bundle')
 
-" # horizontal split below instead of above
-set splitbelow
-set splitright
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 
-""""""""""""""""""""""""""""""
-" =>  tabs
-""""""""""""""""""""""""""""""
-set expandtab
-set shiftwidth=2
-set softtabstop=2
+Plug 'chriskempson/base16-vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'w0rp/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-unimpaired'
+Plug 'justinmk/vim-dirvish'
+Plug 'easymotion/vim-easymotion'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'rbgrouleff/bclose.vim'
 
-""""""""""""""""""""""""""""""
-" => lightline
-""""""""""""""""""""""""""""""
-let g:lightline = {
-\ 'colorscheme': 'wombat',
-\ 'active': {
-\   'left': [['mode', 'paste'], ['readonly', 'relativepath', 'modified']],
-\   'right': [['lineinfo'], ['percent'], ['linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok', 'fileformat', 'filetype']]
-\ },
-\ 'component_expand': {
-\   'linter_checking': 'lightline#ale#checking',
-\   'linter_warnings': 'LightlineLinterWarnings',
-\   'linter_errors': 'LightlineLinterErrors',
-\   'linter_ok': 'LightlineLinterOK'
-\ },
-\ 'component_function': {
-\   'filetype': 'MyFiletype',
-\   'fileformat': 'MyFileformat',
-\ },
-\ 'component_type': {
-\   'linter_checking': 'left',
-\   'linter_warnings': 'warning',
-\   'linter_errors': 'error',
-\   'linter_ok': 'left',
-\ },
-\ }
-function! LightlineLinterChecking() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf("%d \uf110", all_non_errors)
-endfunction
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf("%d \uf071", all_non_errors)
-endfunction
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf("%d \uf05e", all_errors)
-endfunction
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? "\uf00c " : ''
-endfunction
-
-" " lightline devicons functions
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! MyFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
+" Initialize plugin system
+call plug#end()
 
 """"""""""""""""""""""""""""""
-" => devicons
+" =>  source additional vimrcs
 """"""""""""""""""""""""""""""
-" enable folder/directory glyph flag (disabled by default with 0)
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" enable open and close folder/directory glyph flags (disabled by default with 0)
-let g:DevIconsEnableFoldersOpenClose = 1
+source ~/.vimrcs/basic.vim
+source ~/.vimrcs/filetypes.vim
+source ~/.vimrcs/plugins_config.vim
+source ~/.vimrcs/extended.vim
 
 """"""""""""""""""""""""""""""
 " => OS specific
@@ -141,119 +89,3 @@ elseif uname == 'Linux'
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
 endif
-
-""""""""""""""""""""""""""""""
-" => fzf
-""""""""""""""""""""""""""""""
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-" File finder
-nmap <Leader>f :GFiles<CR>
-nmap <Leader>F :Files<CR>
-" Buffer finder
-nmap <Leader>h :History<CR>
-" Tag finder
-nmap <Leader>t :BTags<CR>
-nmap <Leader>T :Tags<CR>
-" Line finder
-nmap <Leader>l :BLines<CR>
-nmap <Leader>L :Lines<CR>
-nmap <Leader>' :Marks<CR>
-" Project Finder
-nmap <Leader>ag :Ag<Space>
-nmap <Leader>rg :Rg<CR>
-" Help finder
-nmap <Leader>H :Helptags!<CR>
-
-""""""""""""""""""""""""""""""
-" => NERDTree
-""""""""""""""""""""""""""""""
-" toggle on open file
-let g:NERDTreeQuitOnOpen = 1
-autocmd StdinReadPre * let s:std_in=1
-" exit if NERDTree is the last buffer
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" minimal UI
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-
-""""""""""""""""""""""""""""""
-" => deoplete
-""""""""""""""""""""""""""""""
-" enable deoplete a startup
-let g:deoplete#enable_at_startup = 1
-" auto close completion popup after successful completion
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" tab completion
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
-
-""""""""""""""""""""""""""""""
-" =>  GitGutter
-""""""""""""""""""""""""""""""
-let g:gitgutter_grep_command = 'rg --hidden --follow --glob "!.git/*"'
-let g:gitgutter_enabled = 1
-
-""""""""""""""""""""""""""""""
-" =>  ALE
-""""""""""""""""""""""""""""""
-let g:ale_sign_warning = "\uf071"
-let g:ale_sign_error = "\uf05e"
-highlight link ALEWarningSign String
-highlight link ALEErrorSign Title
-nmap ]w :ALENextWrap<CR>
-nmap [w :ALEPreviousWrap<CR>
-nmap <Leader>af <Plug>(ale_fix)
-augroup VimDiff
-  autocmd!
-  autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
-augroup END
-
-""""""""""""""""""""""""""""""
-" =>  sneak
-""""""""""""""""""""""""""""""
-let g:sneak#label = 1
-
-
-""""""""""""""""""""""""""""""
-" =>  mouse support
-""""""""""""""""""""""""""""""
-:set mouse=a
-:set ttymouse=sgr
-" :set ttymouse=xterm2
-
-
-""""""""""""""""""""""""""""""
-" =>  better split navigation
-""""""""""""""""""""""""""""""
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-""""""""""""""""""""""""""""""
-" => key bindings
-""""""""""""""""""""""""""""""
-" remap esc to `jj`
-:imap jj <Esc>
-
-
-""""""""""""""""""""""""""""""
-" => Handle file change on disk
-""""""""""""""""""""""""""""""
-" Triger `autoread` when files changes on disk
-" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-" Notification after file change
-" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
-autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
