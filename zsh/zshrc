@@ -194,10 +194,11 @@ case `uname` in
     alias fuckdns='sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache'
     # fzf
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    #GPG
+    export "SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh"
     # Go development
     export GOPATH="${HOME}/.go"
     export GOROOT="$(brew --prefix golang)/libexec"
-    export "SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh"
     export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
     # Add Visual Studio Code (code)
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"

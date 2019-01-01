@@ -1,5 +1,6 @@
 [user]
 	name = Chad Jones
 	email = chad@crashcode.org
+	signingkey = E679734C16056721
 [core]
 	editor = vim
