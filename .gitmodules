@@ -2,64 +2,11 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
     ignore = dirty
-[submodule "vim/vim_runtime"]
-	path = vim/vim_runtime
-	url = https://github.com/amix/vimrc.git
-	shallow = true
-    ignore = dirty
 [submodule "zsh/base16-shell"]
 	path = zsh/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
     ignore = dirty
-[submodule "vim/plugins/base16-vim"]
-	path = vim/plugins/base16-vim
-	url = https://github.com/chriskempson/base16-vim.git
-    ignore = dirty
-[submodule "vim/plugins/editorconfig-vim"]
-	path = vim/plugins/editorconfig-vim
-	url = https://github.com/editorconfig/editorconfig-vim.git
-    ignore = dirty
-[submodule "vim/plugins/vim-devicons"]
-	path = vim/plugins/vim-devicons
-	url = https://github.com/ryanoasis/vim-devicons.git
-    ignore = dirty
-[submodule "vim/plugins/vim-nerdtree-syntax-highlight"]
-	path = vim/plugins/vim-nerdtree-syntax-highlight
-	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
-    ignore = dirty
-[submodule "vim/plugins/fzf.vim"]
-	path = vim/plugins/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
-    ignore = dirty
-[submodule "vim/plugins/nvim-yarp"]
-	path = vim/plugins/nvim-yarp
-	url = https://github.com/roxma/nvim-yarp.git
-    ignore = dirty
-[submodule "vim/plugins/vim-hug-neovim-rpc"]
-	path = vim/plugins/vim-hug-neovim-rpc
-	url = https://github.com/roxma/vim-hug-neovim-rpc.git
-    ignore = dirty
-[submodule "vim/plugins/deoplete.nvim"]
-	path = vim/plugins/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim.git
-    ignore = dirty
 [submodule "dotbot-brew"]
 	path = dotbot-brew
 	url = https://github.com/d12frosted/dotbot-brew.git
-    ignore = dirty
-[submodule "vim/plugins/fzf"]
-	path = vim/plugins/fzf
-	url = https://github.com/junegunn/fzf.git
-    ignore = dirty
-[submodule "vim/plugins/vim-rhubarb"]
-	path = vim/plugins/vim-rhubarb
-	url = https://github.com/tpope/vim-rhubarb.git
-    ignore = dirty
-[submodule "vim/plugins/vim-gitgutter"]
-	path = vim/plugins/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter.git
-    ignore = dirty
-[submodule "vim/plugins/lightline-ale"]
-	path = vim/plugins/lightline-ale
-	url = https://github.com/maximbaz/lightline-ale.git
     ignore = dirty
