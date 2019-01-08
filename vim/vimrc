@@ -49,6 +49,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'yuttie/comfortable-motion.vim'
 
 " Initialize plugin system
 call plug#end()
