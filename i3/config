@@ -51,12 +51,12 @@ bindsym $mod+Ctrl+m exec termite -e 'alsamixer'
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 2; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 2; notify-send 'brightness down'"
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec firefox
+bindsym $mod+F2 exec qutebrowser
 bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
@@ -182,7 +182,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] $ws1
-assign [class="Firefox"] $ws2
+assign [class="qutebrowser"] $ws2
 for_window [class="Spotify"] move to workspace $ws4
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
