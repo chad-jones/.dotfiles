@@ -35,6 +35,7 @@
     ~/.gitconfig: git/gitconfig
     ~/.vimrc: vim/vimrc
     ~/.config/nvim/init.vim: vim/vimrc
+    ~/.config/nvimpager/init.vim: vim/nvimpager/init.vim
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.zsh_plugins.txt: zsh/zsh_plugins.txt
