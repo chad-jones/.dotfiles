@@ -90,3 +90,8 @@ elseif uname == 'Linux'
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
 endif
+
+""""""""""""""""""""""""""""""
+" => mutt
+""""""""""""""""""""""""""""""
+au BufRead /tmp/mutt-* set tw=72
