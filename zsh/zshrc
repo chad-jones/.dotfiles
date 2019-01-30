@@ -236,3 +236,10 @@ export "GPG_TTY=$(tty)"
 if [ -r ${HOME}/.zshrc_local ]; then
     source ${HOME}/.zshrc_local
 fi
+
+# pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
