@@ -50,6 +50,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'yuttie/comfortable-motion.vim'
+Plug 'fatih/vim-go'
 
 " Initialize plugin system
 call plug#end()
