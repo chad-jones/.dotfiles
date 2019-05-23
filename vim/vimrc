@@ -31,7 +31,10 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
-Plug 'chriskempson/base16-vim'
+function FixupBase16(info)
+    !gsed -i '/Base16hi/\! s/a:\(attr\|guisp\)/l:\1/g' ~/.vim/bundle/base16-vim/colors/*.vim
+endfunction
+Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') }
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'

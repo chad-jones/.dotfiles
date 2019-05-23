@@ -13,6 +13,10 @@ export PATH="$PYENV_ROOT/bin:$HOME/.gem/ruby/2.5.0/bin:$HOME/bin:$PATH"
 case `uname` in
   Darwin)
     # OS X
+    # mysql
+    export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+    # user
+    export PATH="${HOME}/bin:$PATH"
   ;;
   Linux)
     # Linux
