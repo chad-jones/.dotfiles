@@ -202,12 +202,13 @@ case `uname` in
     export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
     # Add Visual Studio Code (code)
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    export LC_ALL=en_US.UTF-8
   ;;
   Linux)
     # Linux
     # fzf
-    source /usr/share/doc/fzf/key-bindings.zsh
-    source /usr/share/doc/fzf/completion.zsh
+    source ${HOME}/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+    source ${HOME}/.linuxbrew/opt/fzf/shell/completion.zsh
     # clipboard aliases
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
@@ -215,7 +216,15 @@ case `uname` in
     alias ls='ls --color=auto'
     alias du="ncdu"
     export GOPATH="${HOME}/go"
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    gpgconf --launch gpg-agent
   ;;
+esac
+
+case $TERM in
+  xterm*)
+    precmd () {print -Pn "\e]0;%n@%m: %~\a"} #{print -Pn "\e]0;%~\a"}
+    ;;
 esac
 
 # Aliases
@@ -228,11 +237,13 @@ alias histg="history | grep"
 alias top="htop"
 alias myip="curl http://ipecho.net/plain; echo"
 alias fuckgpg='gpg-connect-agent killagent /bye; gpg-connect-agent /bye'
+alias kubectl='nocorrect kubectl'
+alias vim="nvim"
+
 eval "$(hub alias -s)"
 
 # GPG
 export "GPG_TTY=$(tty)"
-
 
 if [ -r ${HOME}/.zshrc_local ]; then
     source ${HOME}/.zshrc_local

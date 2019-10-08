@@ -22,7 +22,8 @@
   - kubernetes-cli
   - kubectx
   - ansible-lint
-  - vim --with-python --with-ruby --with-perl
+  - ncdu
+  - vim
 
 - cask:
   - font-hack-nerd-font
