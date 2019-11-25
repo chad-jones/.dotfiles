@@ -36,27 +36,14 @@
     ~/.gitconfig: git/gitconfig
     ~/.vimrc: vim/vimrc
     ~/.config/nvim/init.vim: vim/vimrc
-    ~/.config/nvimpager/init.vim: vim/nvimpager/init.vim
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.zsh_plugins.txt: zsh/zsh_plugins.txt
-    ~/.xinitrc: 
-      path: X/xinitrc
-      if: '[[ "$(uname)" == "Linux" ]]'
     ~/.Xresources: 
       path: X/Xresources
       if: '[[ "$(uname)" == "Linux" ]]'
     ~/.xprofile: 
       path: X/xprofile
-      if: '[[ "$(uname)" == "Linux" ]]'
-    ~/.config/i3/config: 
-      path: i3/config
-      if: '[[ "$(uname)" == "Linux" ]]'
-    ~/.config/i3status/config: 
-      path: i3status/config
-      if: '[[ "$(uname)" == "Linux" ]]'
-    ~/termite.terminfo:
-      path: termite/termite.terminfo
       if: '[[ "$(uname)" == "Linux" ]]'
     ~/.vimrcs:
       path: vim/vimrcs

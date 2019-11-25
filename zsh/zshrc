@@ -207,8 +207,8 @@ case `uname` in
   Linux)
     # Linux
     # fzf
-    source ${HOME}/.linuxbrew/opt/fzf/shell/key-bindings.zsh
-    source ${HOME}/.linuxbrew/opt/fzf/shell/completion.zsh
+    source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+    source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
     # clipboard aliases
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
